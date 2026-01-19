@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="history-list">
+    <view class="history-item" wx:for="{{meetingList}}" wx:key="id" bindtap="onTapDetail" data-id="{{item.id}}">
+      <view class="item-header">
+        <text class="item-title">{{item.title}}</text>
+        <text class="item-date">{{item.date}}</text>
+      </view>
+      <view class="item-footer">
+        <text class="item-duration">时长: {{item.duration}}</text>
+        <text class="item-status {{item.status === 'completed' ? 'success' : 'processing'}}">
+          {{item.status === 'completed' ? '已生成' : '处理中'}}
+        </text>
+      </view>
+    </view>
+  </view>
+</view>

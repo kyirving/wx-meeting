@@ -1,0 +1,30 @@
+<view class="container">
+  <!-- 顶部状态提示 -->
+  <view class="status-bar">
+    <text class="status-text">{{isRecording ? '正在录音...' : '准备就绪'}}</text>
+    <text class="time-text" wx:if="{{isRecording}}">{{recordingTime}}</text>
+  </view>
+
+  <!-- 中间核心操作区 -->
+  <view class="main-action">
+    <view class="record-btn-wrapper {{isRecording ? 'recording' : ''}}" bindtap="toggleRecording">
+      <view class="record-btn">
+        <view class="mic-icon">{{isRecording ? '⬛' : '🎙️'}}</view>
+      </view>
+      <view class="ripple" wx:if="{{isRecording}}"></view>
+    </view>
+    <text class="tip-text">{{isRecording ? '点击结束会议' : '点击开始会议'}}</text>
+  </view>
+
+  <!-- 底部功能入口 -->
+  <view class="footer-actions">
+    <view class="action-item" bindtap="onTapUpload">
+      <view class="action-icon">📤</view>
+      <text class="action-label">上传录音</text>
+    </view>
+    <view class="action-item" bindtap="onTapRecent">
+      <view class="action-icon">📝</view>
+      <text class="action-label">最近草稿</text>
+    </view>
+  </view>
+</view>
