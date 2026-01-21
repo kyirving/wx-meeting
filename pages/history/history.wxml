@@ -1,22 +1,51 @@
+<wxs module="utils">
+var formatTime = function(dateStr) {
+  if (!dateStr) return '';
+  // WXS getDate supports ISO 8601 format string parsing
+  var date = getDate(dateStr);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  
+  var formatNumber = function(n) {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+  }
+  
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':');
+}
+
+module.exports = {
+  formatTime: formatTime
+}
+</wxs>
+
 <view class="container">
   <view class="history-list">
-    <view class="history-item" wx:for="{{meetingList}}" wx:key="id" bindtap="onTapDetail" data-id="{{item.id}}">
-      <view class="item-header">
-        <text class="item-title">{{item.name}}</text>
-        <view class="item-status success">
-          已生成
+    <view class="history-card" wx:for="{{meetingList}}" wx:key="id" bindtap="onTapDetail" data-id="{{item.id}}">
+      <view class="card-main">
+        <view class="card-header">
+          <text class="card-title">{{item.name || '未命名会议'}}</text>
+          <view wx:if="{{item.status}}" class="card-status {{item.status === 'completed' ? 'status-success' : 'status-processing'}}">
+            {{item.status === 'completed' ? '已生成' : '处理中'}}
+          </view>
+        </view>
+        
+        <view class="card-meta">
+          <view class="meta-item">
+            <text class="iconfont icon-time"></text>
+            <text class="meta-text">{{utils.formatTime(item.recorded_at)}}</text>
+          </view>
+          <view class="meta-item" wx:if="{{item.duration}}">
+            <text class="separator">·</text>
+            <text class="meta-text">{{item.duration}}</text>
+          </view>
         </view>
       </view>
-      <view class="item-info">
-        <view class="info-row">
-          <text class="icon">🕒</text>
-          <text>{{item.date}}</text>
-        </view>
-        <view class="info-row">
-          <text class="icon">⏳</text>
-          <text>{{item.duration}}</text>
-        </view>
-      </view>
+      
+      <view class="card-arrow"></view>
     </view>
   </view>
 
@@ -27,6 +56,7 @@
   </view>
   
   <view class="empty-state" wx:if="{{!isLoading && meetingList.length === 0}}">
+    <image class="empty-image" src="/assets/images/empty.png" mode="aspectFit" wx:if="{{false}}"></image> <!-- Placeholder for empty image -->
     <text>暂无会议记录</text>
   </view>
 
@@ -34,7 +64,7 @@
   <view class="modal-mask" wx:if="{{showDetailModal}}" bindtap="closeDetailModal">
     <view class="modal-content" catchtap="preventBubble">
       <view class="modal-header">
-        <text class="modal-title">{{currentMeeting.title}}</text>
+        <text class="modal-title">{{currentMeeting.name || '会议详情'}}</text>
         <view class="close-btn" bindtap="closeDetailModal">×</view>
       </view>
       <scroll-view scroll-y class="modal-body">

@@ -10,9 +10,8 @@ App({
   },
   
   data: {
-    baseUrl: 'http://localhost:8000',
+    baseUrl: 'http://172.16.8.105:8000',
   },
-
   onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []

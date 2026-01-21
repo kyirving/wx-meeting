@@ -22,10 +22,6 @@ Page({
       const { tempFilePath } = res;
       this.handleRecordingStop(tempFilePath);
     });
-
-    this.recorderManager.start({
-      format: 'wav'
-    })
   },
 
   /**
@@ -71,7 +67,7 @@ Page({
 
     // 开始录音
     this.recorderManager.start({
-      format: 'mp3'
+      format: 'wav'
     });
 
     wx.showToast({
