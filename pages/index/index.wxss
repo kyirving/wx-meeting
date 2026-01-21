@@ -34,6 +34,26 @@ page {
   font-weight: bold;
 }
 
+.input-section {
+  width: 100%;
+  padding: 0 40rpx;
+  margin-top: 40rpx;
+  box-sizing: border-box;
+}
+
+.meeting-title-input {
+  width: 100%;
+  height: 88rpx;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 0 30rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  box-sizing: border-box;
+}
+
 .main-action {
   display: flex;
   flex-direction: column;

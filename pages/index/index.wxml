@@ -5,6 +5,11 @@
     <text class="time-text" wx:if="{{isRecording}}">{{recordingTime}}</text>
   </view>
 
+  <!-- 会议名称输入 -->
+  <view class="input-section">
+    <input class="meeting-title-input" placeholder="请输入会议名称 (默认: 当前时间会议)" value="{{meetingTitle}}" bindinput="onTitleInput" disabled="{{isRecording}}" />
+  </view>
+
   <!-- 中间核心操作区 -->
   <view class="main-action">
     <view class="record-btn-wrapper {{isRecording ? 'recording' : ''}}" bindtap="toggleRecording">

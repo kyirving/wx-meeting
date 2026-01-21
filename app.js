@@ -1,5 +1,18 @@
 // app.js
 App({
+  // 全局数据
+  globalData: {
+    // ✅ 直接定义，不会出现 undefined
+    config: {
+      API_BASE_URL: 'http://localhost:3000',
+      DEBUG: true
+    }
+  },
+  
+  data: {
+    baseUrl: 'http://localhost:8000',
+  },
+
   onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []

@@ -1,10 +1,8 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/ai/ai",
-    "pages/history/history",
-    "pages/profile/profile",
-    "pages/logs/logs"
+    "pages/index/index",
+    "pages/history/history"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -17,20 +15,16 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "会议"
-      },
-      {
         "pagePath": "pages/ai/ai",
         "text": "AI助手"
       },
       {
-        "pagePath": "pages/history/history",
-        "text": "历史"
+        "pagePath": "pages/index/index",
+        "text": "会议"
       },
       {
-        "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "pagePath": "pages/history/history",
+        "text": "历史"
       }
     ]
   },

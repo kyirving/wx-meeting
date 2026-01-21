@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "历史会议"
+  "navigationBarTitleText": "历史会议",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

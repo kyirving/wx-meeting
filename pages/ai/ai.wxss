@@ -1,6 +1,6 @@
 page {
   height: 100vh;
-  background-color: #f6f6f6;
+  background-color: #ededed;
   display: flex;
   flex-direction: column;
 }
@@ -9,18 +9,23 @@ page {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
 }
 
 .chat-list {
   flex: 1;
-  padding: 20rpx;
+  height: 0;
+  width: 100%;
+  padding: 20rpx 30rpx;
   box-sizing: border-box;
 }
 
 .chat-item {
   display: flex;
-  margin-bottom: 30rpx;
+  margin-bottom: 40rpx;
   align-items: flex-start;
+  width: 100%;
 }
 
 .chat-item.user {
@@ -30,60 +35,160 @@ page {
 .avatar {
   width: 80rpx;
   height: 80rpx;
-  background-color: #fff;
-  border-radius: 50%;
+  border-radius: 12rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 40rpx;
-  margin: 0 20rpx;
+  background-color: #fff;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.chat-item.user .avatar {
+  margin-left: 20rpx;
+}
+
+.chat-item.ai .avatar {
+  margin-right: 20rpx;
 }
 
 .content {
-  max-width: 60%;
-  padding: 20rpx;
-  background-color: #fff;
+  max-width: 68%;
+  padding: 22rpx 26rpx;
   border-radius: 10rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   line-height: 1.5;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.chat-item.ai .content {
+  background-color: #fff;
   color: #333;
 }
 
 .chat-item.user .content {
-  background-color: #007AFF;
-  color: #fff;
+  background-color: #95ec69;
+  color: #000;
 }
 
-.input-area {
-  padding: 20rpx;
-  background-color: #fff;
+.loading-content {
+  padding: 30rpx 40rpx !important;
   display: flex;
   align-items: center;
-  border-top: 1rpx solid #eee;
+  justify-content: center;
+  min-width: 80rpx;
+}
+
+.dot-flashing {
+  position: relative;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 5rpx;
+  background-color: #999;
+  color: #999;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+
+.dot-flashing::before, .dot-flashing::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-flashing::before {
+  left: -20rpx;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 5rpx;
+  background-color: #999;
+  color: #999;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dot-flashing::after {
+  left: 20rpx;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 5rpx;
+  background-color: #999;
+  color: #999;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: #999;
+  }
+  50%, 100% {
+    background-color: #ebe6ff;
+  }
+}
+
+/* 底部输入区域 */
+.input-area {
+  width: 100%;
+  padding: 20rpx 24rpx;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: flex-end; /* 底部对齐 */
+  border-top: 1rpx solid #e5e5e5;
+  box-sizing: border-box;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+}
+
+.input-wrapper {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+  min-height: 80rpx; /* 固定最小高度 */
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  padding: 0 20rpx; /* 只控制左右内边距 */
 }
 
 .input {
-  flex: 1;
-  height: 72rpx;
-  background-color: #f6f6f6;
-  border-radius: 36rpx;
-  padding: 0 30rpx;
-  margin-right: 20rpx;
-  font-size: 28rpx;
+  width: 100%;
+  /* 移除固定的 min-height，由内容撑开或父容器控制 */
+  max-height: 200rpx; 
+  background-color: transparent;
+  font-size: 32rpx;
+  line-height: 1.4;
+  box-sizing: border-box;
+  caret-color: #07c160;
+  padding: 18rpx 0; /* 给文字上下一些呼吸空间 */
+  margin: 0;
 }
 
 .send-btn {
   width: 120rpx !important;
-  height: 72rpx;
-  line-height: 72rpx;
+  height: 80rpx; /* 强制高度与 input-wrapper 的最小高度一致 */
+  line-height: 80rpx;
   padding: 0;
   font-size: 28rpx;
-  background-color: #007AFF;
+  font-weight: 600;
+  background-color: #07c160;
   color: #fff;
-  border-radius: 36rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-bottom: 0; /* 确保底部对齐 */
+}
+
+.send-btn:active {
+  background-color: #06ad56;
 }
 
 .send-btn[disabled] {
-  background-color: #ccc !important;
-  color: #fff !important;
+  background-color: rgba(7, 193, 96, 0.4) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
 }

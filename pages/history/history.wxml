@@ -2,14 +2,46 @@
   <view class="history-list">
     <view class="history-item" wx:for="{{meetingList}}" wx:key="id" bindtap="onTapDetail" data-id="{{item.id}}">
       <view class="item-header">
-        <text class="item-title">{{item.title}}</text>
-        <text class="item-date">{{item.date}}</text>
+        <text class="item-title">{{item.name}}</text>
+        <view class="item-status success">
+          已生成
+        </view>
       </view>
-      <view class="item-footer">
-        <text class="item-duration">时长: {{item.duration}}</text>
-        <text class="item-status {{item.status === 'completed' ? 'success' : 'processing'}}">
-          {{item.status === 'completed' ? '已生成' : '处理中'}}
-        </text>
+      <view class="item-info">
+        <view class="info-row">
+          <text class="icon">🕒</text>
+          <text>{{item.date}}</text>
+        </view>
+        <view class="info-row">
+          <text class="icon">⏳</text>
+          <text>{{item.duration}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部加载状态 -->
+  <view class="loading-more" wx:if="{{meetingList.length > 0}}">
+    <view wx:if="{{isLoading}}" class="loading-text">正在加载...</view>
+    <view wx:elif="{{!hasMore}}" class="no-more-text">没有更多记录了</view>
+  </view>
+  
+  <view class="empty-state" wx:if="{{!isLoading && meetingList.length === 0}}">
+    <text>暂无会议记录</text>
+  </view>
+
+  <!-- 会议纪要详情弹窗 -->
+  <view class="modal-mask" wx:if="{{showDetailModal}}" bindtap="closeDetailModal">
+    <view class="modal-content" catchtap="preventBubble">
+      <view class="modal-header">
+        <text class="modal-title">{{currentMeeting.title}}</text>
+        <view class="close-btn" bindtap="closeDetailModal">×</view>
+      </view>
+      <scroll-view scroll-y class="modal-body">
+        <text class="markdown-text" user-select="true">{{currentMeeting.minutes_preview}}</text>
+      </scroll-view>
+      <view class="modal-footer">
+        <button class="copy-btn" bindtap="copyContent">复制内容</button>
       </view>
     </view>
   </view>

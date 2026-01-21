@@ -1,15 +1,45 @@
 <view class="container">
-  <scroll-view class="chat-list" scroll-y scroll-into-view="{{toView}}">
+  <scroll-view class="chat-list" scroll-y scroll-into-view="{{toView}}" scroll-with-animation="true" enable-flex="true">
     <view class="chat-item {{item.type === 'user' ? 'user' : 'ai'}}" wx:for="{{msgList}}" wx:key="index" id="msg-{{index}}">
-      <view class="avatar">{{item.type === 'user' ? '👤' : '🤖'}}</view>
+      <view class="avatar">
+        <image wx:if="{{item.type === 'ai'}}" src="/assets/images/favicon.png" style="width: 70%; height: 70%;" />
+        <text wx:else>👤</text>
+      </view>
       <view class="content">
-        <text>{{item.content}}</text>
+        <text user-select="true">{{item.content}}</text>
       </view>
     </view>
+    
+    <!-- Loading 状态 -->
+    <view class="chat-item ai" wx:if="{{isLoading}}">
+      <view class="avatar">
+        <image src="/assets/images/favicon.png" style="width: 70%; height: 70%;" />
+      </view>
+      <view class="content loading-content">
+        <view class="dot-flashing"></view>
+      </view>
+    </view>
+
+    <!-- 占位元素，确保最后一条消息不被遮挡 -->
+    <view style="height: 20rpx;" id="msg-end"></view>
   </scroll-view>
 
   <view class="input-area">
-    <input class="input" placeholder="请输入您的问题..." value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMsg" />
+    <view class="input-wrapper">
+      <textarea 
+        class="input" 
+        placeholder="输入您的问题..." 
+        value="{{inputValue}}" 
+        bindinput="onInput" 
+        confirm-type="send" 
+        bindconfirm="sendMsg" 
+        auto-height="true"
+        cursor-spacing="20"
+        maxlength="500"
+        show-confirm-bar="{{false}}"
+        disable-default-padding="true"
+      />
+    </view>
     <button class="send-btn" bindtap="sendMsg" disabled="{{!inputValue}}">发送</button>
   </view>
 </view>
